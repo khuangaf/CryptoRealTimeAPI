@@ -2,6 +2,5 @@ pandas
 numpy
 tensorflow
 Flask<1
-json
 keras
 sklearn
