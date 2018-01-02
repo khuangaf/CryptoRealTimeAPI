@@ -2,7 +2,6 @@ pandas
 numpy
 tensorflow
 Flask<1
-urllib2
 json
 keras
 sklearn
