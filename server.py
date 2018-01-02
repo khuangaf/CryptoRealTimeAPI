@@ -101,11 +101,11 @@ def index():
 	return render_template("index.html")
 # app.run(port="8080")
 if __name__ == '__main__':
-	HOST = environ.get('SERVER_HOST', 'localhost')
+	HOST = environ.get('HOST', 'localhost')
 	try:
 		PORT = int(environ.get('PORT','5009'))
 	except ValueError:
 		PORT = 5009
-	# app.run(HOST, PORT)
-	app.run()
+	app.run(HOST, PORT)
+	# app.run()
 	# socketio.run(app, port =  PORT, host= '0.0.0.0')
