@@ -2,49 +2,49 @@ from __future__ import print_function
 from flask import Flask, render_template,request
 import sys
 
-from os import environ
-from flask import Flask
-import json
-import numpy as np
-import os
-import pandas as pd
-import urllib2
-from datetime import datetime
-import calendar
-from keras import applications
-from keras.models import Sequential
-from keras.models import Model
-from keras.layers import Dropout, Flatten, Dense, Activation, Reshape, LeakyReLU
-from keras.callbacks import CSVLogger
-import tensorflow as tf
-from scipy.ndimage import imread
-import numpy as np
-import random
-from keras.layers import LSTM
-from keras.layers import Conv1D, MaxPooling1D
-from keras import backend as K
-import keras
-from keras.callbacks import CSVLogger, ModelCheckpoint
-from keras.backend.tensorflow_backend import set_session
-from keras import optimizers
-import h5py
-from sklearn.preprocessing import MinMaxScaler
-import os
-import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
-import h5py
-from flask import jsonify
-from json import encoder
+# from os import environ
+# from flask import Flask
+# import json
+# import numpy as np
+# import os
+# import pandas as pd
+# import urllib2
+# from datetime import datetime
+# import calendar
+# from keras import applications
+# from keras.models import Sequential
+# from keras.models import Model
+# from keras.layers import Dropout, Flatten, Dense, Activation, Reshape, LeakyReLU
+# from keras.callbacks import CSVLogger
+# import tensorflow as tf
+# from scipy.ndimage import imread
+# import numpy as np
+# import random
+# from keras.layers import LSTM
+# from keras.layers import Conv1D, MaxPooling1D
+# from keras import backend as K
+# import keras
+# from keras.callbacks import CSVLogger, ModelCheckpoint
+# from keras.backend.tensorflow_backend import set_session
+# from keras import optimizers
+# import h5py
+# from sklearn.preprocessing import MinMaxScaler
+# import os
+# import pandas as pd
+# from sklearn.preprocessing import MinMaxScaler
+# import h5py
+# from flask import jsonify
+# from json import encoder
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-SECRET_KEY = os.environ['SECRET_KEY']
+app.config['SECRET_KEY'] = 'Nice to meet you.'
 
 
 
 
 
+#app.run(environ.get('PORT'))
 
 # @app.route('/api/predict')
 # def api_predict():
