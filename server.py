@@ -48,6 +48,7 @@ app.config['SECRET_KEY'] = 'secret!'
 
 @app.route('/api/predict')
 def api_predict():
+	print ('start', file = sys.stderr)
 	d = datetime.utcnow()
 	unixtime = calendar.timegm(d.utctimetuple())
 
@@ -92,6 +93,7 @@ def api_predict():
 	predicted_inverted = scaler.inverse_transform(predicted)
 	output={}
 	output['prediction'] = list(predicted_inverted.reshape(-1))
+	print ('done', file = sys.stderr)
 	return jsonify([float(a) for a in list(predicted_inverted.reshape(-1))])
 
 @app.route('/')
