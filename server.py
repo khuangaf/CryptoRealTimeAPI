@@ -38,7 +38,8 @@ from json import encoder
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
 
 
 
