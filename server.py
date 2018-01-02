@@ -44,57 +44,56 @@ app.config['SECRET_KEY'] = 'secret!'
 
 
 
-#app.run(environ.get('PORT'))
 
-@app.route('/api/predict')
-def api_predict():
-	print ('start', file = sys.stderr)
-	d = datetime.utcnow()
-	unixtime = calendar.timegm(d.utctimetuple())
+# @app.route('/api/predict')
+# def api_predict():
+# 	print ('start', file = sys.stderr)
+# 	d = datetime.utcnow()
+# 	unixtime = calendar.timegm(d.utctimetuple())
 
-	unixtime = unixtime /100 *100
-	past_unixtime = unixtime- 300*300
-	url = 'https://poloniex.com/public?command=returnChartData&currencyPair=USDT_BTC&start='+str(past_unixtime)+'&end=9999999999&period=300'
-	openUrl = urllib2.urlopen(url)
-	r = openUrl.read()
-	openUrl.close()
-	d = json.loads(r.decode())
-	df = pd.DataFrame(d)
-	original_columns=[u'close', u'date', u'high', u'low', u'open']
-	new_columns = ['Close','Timestamp','High','Low','Open']
-	df = df.loc[:,original_columns]
-	df.columns = new_columns
-	df = df.iloc[-256:,:]
-	datas = df.Close
-	with h5py.File(''.join(['bitcoin2015to2017_close.h5']), 'r') as hf:
-		original_datas = hf['original_datas'].value
+# 	unixtime = unixtime /100 *100
+# 	past_unixtime = unixtime- 300*300
+# 	url = 'https://poloniex.com/public?command=returnChartData&currencyPair=USDT_BTC&start='+str(past_unixtime)+'&end=9999999999&period=300'
+# 	openUrl = urllib2.urlopen(url)
+# 	r = openUrl.read()
+# 	openUrl.close()
+# 	d = json.loads(r.decode())
+# 	df = pd.DataFrame(d)
+# 	original_columns=[u'close', u'date', u'high', u'low', u'open']
+# 	new_columns = ['Close','Timestamp','High','Low','Open']
+# 	df = df.loc[:,original_columns]
+# 	df.columns = new_columns
+# 	df = df.iloc[-256:,:]
+# 	datas = df.Close
+# 	with h5py.File(''.join(['bitcoin2015to2017_close.h5']), 'r') as hf:
+# 		original_datas = hf['original_datas'].value
 
-	scaler = MinMaxScaler()
-	scaler.fit(original_datas[:,0].reshape(-1,1))
-	datas= scaler.transform(datas.reshape(-1,1))
-	datas=datas[None,:,:]
-	#datas.shape = [1,256,1]
-	step_size = datas.shape[1]
-	batch_size= 8
-	nb_features = datas.shape[2]
-	epochs = 1
-	output_size=16
-	units= 50
-	second_units=30
-	model = Sequential()
-	model.add(LSTM(units=units, activation=None, input_shape=(step_size,nb_features),return_sequences=False))
-	model.add(Activation('tanh'))
-	model.add(Dropout(0.2))
-	model.add(Dense(output_size))
-	model.add(LeakyReLU())
-	model.load_weights('weights/bitcoin2015to2017_close_LSTM_1_tanh_leaky_-44-0.00004.hdf5')
-	model.compile(loss='mse', optimizer='adam')
-	predicted = model.predict(datas)
-	predicted_inverted = scaler.inverse_transform(predicted)
-	output={}
-	output['prediction'] = list(predicted_inverted.reshape(-1))
-	print ('done', file = sys.stderr)
-	return jsonify([float(a) for a in list(predicted_inverted.reshape(-1))])
+# 	scaler = MinMaxScaler()
+# 	scaler.fit(original_datas[:,0].reshape(-1,1))
+# 	datas= scaler.transform(datas.reshape(-1,1))
+# 	datas=datas[None,:,:]
+# 	#datas.shape = [1,256,1]
+# 	step_size = datas.shape[1]
+# 	batch_size= 8
+# 	nb_features = datas.shape[2]
+# 	epochs = 1
+# 	output_size=16
+# 	units= 50
+# 	second_units=30
+# 	model = Sequential()
+# 	model.add(LSTM(units=units, activation=None, input_shape=(step_size,nb_features),return_sequences=False))
+# 	model.add(Activation('tanh'))
+# 	model.add(Dropout(0.2))
+# 	model.add(Dense(output_size))
+# 	model.add(LeakyReLU())
+# 	model.load_weights('weights/bitcoin2015to2017_close_LSTM_1_tanh_leaky_-44-0.00004.hdf5')
+# 	model.compile(loss='mse', optimizer='adam')
+# 	predicted = model.predict(datas)
+# 	predicted_inverted = scaler.inverse_transform(predicted)
+# 	output={}
+# 	output['prediction'] = list(predicted_inverted.reshape(-1))
+# 	print ('done', file = sys.stderr)
+# 	return jsonify([float(a) for a in list(predicted_inverted.reshape(-1))])
 
 @app.route('/')
 def index():
