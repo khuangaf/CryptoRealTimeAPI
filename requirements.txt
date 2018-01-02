@@ -3,4 +3,4 @@ numpy
 tensorflow
 Flask<1
 keras
-sklearn
+scikit-learn
