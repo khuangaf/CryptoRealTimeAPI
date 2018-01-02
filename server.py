@@ -9,6 +9,7 @@ import numpy as np
 import os
 import pandas as pd
 import urllib2
+import socket
 # from datetime import datetime
 # import calendar
 # from keras import applications
@@ -101,7 +102,8 @@ def index():
 	return render_template("index.html")
 # app.run(port="8080")
 if __name__ == '__main__':
-	HOST = environ.get('HOST', 'localhost')
+	# HOST = environ.get('HOST', 'localhost')
+	HOST=socket.gethostname()
 	try:
 		PORT = int(environ.get('PORT','5009'))
 	except ValueError:
